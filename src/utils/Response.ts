@@ -1,3 +1,5 @@
+// 请求响应封装
+
 interface ResponseData {
   code: number;
   data?: any;
@@ -16,10 +18,11 @@ class BaseResponse {
 }
 
 export class SuccessResponse extends BaseResponse {
-  constructor(data: any) {
+  constructor(data: any, message?: any) {
     super({
       code: 0,
-      data
+      data,
+      message
     })
   }
 }
@@ -31,4 +34,14 @@ export class ErrorResponse extends BaseResponse {
       message
     })
   }
+}
+
+interface ErrorInfo {
+  code: number;
+  message: string;
+}
+
+export const createErrorResponse = (errorInfo: ErrorInfo) => {
+  const { code, message } = errorInfo
+  return new ErrorResponse(code, message)
 }
